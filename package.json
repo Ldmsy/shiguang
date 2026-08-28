@@ -4,6 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "node --env-file-if-exists=.env apps/api/server.mjs",
+    "migrate:cloud": "node --env-file=.env tools/migrate-cloudbase.mjs",
     "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "@cloudbase/js-sdk": "^3.9.0",
+    "ws": "^8.21.0"
   }
 }

@@ -6,13 +6,15 @@ import { dirname, extname, join, normalize } from 'node:path';
 import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
 import { AGENT_RULE_VERSION, buildChatSystemPrompt } from './agent/prompt.mjs';
 import { safetyRoute } from './agent/safety.mjs';
-import { JsonStore } from './store.mjs';
+import { CloudJsonStore, CloudUserStore, JsonStore, createCloudDatabase } from './store.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const webDir = join(here, '../../新版网页');
-const dataDir = join(here, '../../.data');
+const dataDir = process.env.DATA_DIR ? normalize(process.env.DATA_DIR) : join(here, '../../.data');
 const usersFile = join(dataDir, 'users.json');
-const appStore = new JsonStore(join(dataDir, 'app.json'));
+const cloudDatabase = createCloudDatabase(process.env.CLOUDBASE_ENV_ID, process.env.CLOUDBASE_APIKEY);
+const appStore = cloudDatabase ? new CloudJsonStore(cloudDatabase) : new JsonStore(join(dataDir, 'app.json'));
+const cloudUsers = cloudDatabase ? new CloudUserStore(cloudDatabase) : null;
 const sessions = new Map();
 const codes = new Map();
 const temporaryExpressionSignals = new Map();
@@ -255,8 +257,8 @@ function validPhone(phone) { return typeof phone === 'string' && /^1[3-9]\d{9}$/
 function validMessage(value) { return value && (value.role === 'user' || value.role === 'assistant') && typeof value.content === 'string' && value.content.length <= 4000; }
 function hashPassword(password, salt) { return scryptSync(password, salt, 64).toString('hex'); }
 function sameHash(a, b) { try { return timingSafeEqual(Buffer.from(a, 'hex'), Buffer.from(b, 'hex')); } catch { return false; } }
-async function loadUsers() { if (!existsSync(usersFile)) return []; return JSON.parse(await readFile(usersFile, 'utf8')); }
-async function saveUsers(users) { await mkdir(dataDir, { recursive: true }); await writeFile(usersFile, JSON.stringify(users, null, 2)); }
+async function loadUsers() { if (cloudUsers) return cloudUsers.read(); if (!existsSync(usersFile)) return []; return JSON.parse(await readFile(usersFile, 'utf8')); }
+async function saveUsers(users) { if (cloudUsers) return cloudUsers.save(users); await mkdir(dataDir, { recursive: true }); await writeFile(usersFile, JSON.stringify(users, null, 2)); }
 function json(res, status, data) { res.writeHead(status, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', 'x-agent-rule-version': AGENT_RULE_VERSION }); res.end(JSON.stringify(data)); }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) createApp().listen(Number(process.env.PORT || 4173), () => console.log(`时光初版：http://127.0.0.1:${process.env.PORT || 4173}`));

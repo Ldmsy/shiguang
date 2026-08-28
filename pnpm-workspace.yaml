@@ -1,0 +1,4 @@
+allowBuilds:
+  core-js-pure: false
+minimumReleaseAgeExclude:
+  - '@cloudbase/js-sdk@3.9.0'
