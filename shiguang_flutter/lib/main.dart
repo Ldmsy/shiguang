@@ -17,7 +17,7 @@ class ShiguangApp extends StatelessWidget {
       colorScheme: ColorScheme.fromSeed(seedColor: pine, surface: paper),
       scaffoldBackgroundColor: paper,
       useMaterial3: true,
-        fontFamily: 'NotoSansSC',
+      fontFamily: 'NotoSansSC',
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
           fontSize: 32,
@@ -220,6 +220,7 @@ class HomeShell extends StatefulWidget {
 
 class _HomeShellState extends State<HomeShell> {
   int index = 0;
+  bool mobileSidebarExpanded = false;
   final pages = const [
     StoryPage(),
     RecordsPage(),
@@ -255,11 +256,123 @@ class _HomeShellState extends State<HomeShell> {
           body = IndexedStack(index: index, children: pages);
       if (!desktop) {
         return Scaffold(
-          body: body,
-          bottomNavigationBar: NavigationBar(
-            selectedIndex: index,
-            onDestinationSelected: (v) => setState(() => index = v),
-            destinations: destinations,
+          body: Stack(
+            children: [
+              Padding(padding: const EdgeInsets.only(left: 72), child: body),
+              if (mobileSidebarExpanded)
+                Positioned.fill(
+                  left: 232,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => setState(() => mobileSidebarExpanded = false),
+                  ),
+                ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 240),
+                  curve: Curves.easeOutCubic,
+                  width: mobileSidebarExpanded ? 232 : 72,
+                  decoration: const BoxDecoration(
+                    color: mist,
+                    border: Border(right: BorderSide(color: line)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x14000000),
+                        blurRadius: 18,
+                        offset: Offset(4, 0),
+                      ),
+                    ],
+                  ),
+                  child: SafeArea(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        IconButton(
+                          tooltip: mobileSidebarExpanded ? '收起侧边栏' : '展开侧边栏',
+                          onPressed: () => setState(
+                            () =>
+                                mobileSidebarExpanded = !mobileSidebarExpanded,
+                          ),
+                          icon: Icon(
+                            mobileSidebarExpanded
+                                ? Icons.menu_open_rounded
+                                : Icons.menu_rounded,
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        ...List.generate(
+                          destinations.length,
+                          (i) => Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            child: Material(
+                              color: index == i
+                                  ? Colors.white
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(14),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(14),
+                                onTap: () => setState(() {
+                                  index = i;
+                                  mobileSidebarExpanded = false;
+                                }),
+                                child: SizedBox(
+                                  height: 52,
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 54,
+                                        child: IconTheme(
+                                          data: IconThemeData(
+                                            color: index == i ? pine : ink,
+                                          ),
+                                          child: index == i
+                                              ? destinations[i].selectedIcon ??
+                                                    destinations[i].icon
+                                              : destinations[i].icon,
+                                        ),
+                                      ),
+                                      if (mobileSidebarExpanded)
+                                        Expanded(
+                                          child: Text(
+                                            destinations[i].label,
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              color: index == i ? pine : ink,
+                                              fontWeight: index == i
+                                                  ? FontWeight.w700
+                                                  : FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Spacer(),
+                        if (mobileSidebarExpanded)
+                          const Padding(
+                            padding: EdgeInsets.all(18),
+                            child: Text(
+                              '林溪 · 仅自己可见',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black45,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       }
