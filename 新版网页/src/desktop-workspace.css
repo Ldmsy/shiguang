@@ -389,3 +389,8 @@ body { background:#fff; }
   .simple-skill-modal{display:grid;place-items:center;padding:12px;background:rgba(31,50,44,.36);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
   .skill-text-card{width:calc(100% - 8px);height:66.666%;min-height:0;padding:28px 22px 22px;border-radius:24px}.skill-text-card>.skill-modal-close{position:absolute;top:14px;right:14px}.skill-text-card>header{padding-right:40px;gap:8px}.skill-text-card>header b{letter-spacing:.06em}.skill-card-title h2{font-size:40px}.skill-card-title>p{font-size:10px}.skill-text-card>section{padding:15px 0}.skill-text-card>section p{font-size:9px}.skill-text-card>footer{gap:10px}.skill-text-card>footer span{font-size:7px}
 }
+
+.skill-text-card .skill-card-title{margin:24px 0 14px}
+.skill-text-card>section{padding:14px 0;border-bottom:0}
+.skill-text-card>section.skill-event{margin:0 -12px;padding:15px 12px;border:0;border-radius:16px;background:rgba(255,255,255,.58)}
+.skill-text-card>section.skill-event p{font-size:11px;color:#344f47}
