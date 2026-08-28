@@ -228,7 +228,7 @@ function authenticatedSession(req) {
 function revokeRequestSession(req) { const match=/^Bearer\s+([a-f0-9]+)$/i.exec(req.headers.authorization||''); if(match)sessions.delete(match[1]); }
 function modelApiKey(){return process.env.MODEL_API_KEY||process.env.QINIU_API_KEY||process.env.DEEPSEEK_API_KEY}
 function modelName(){return process.env.MODEL_NAME||process.env.DEEPSEEK_MODEL||'deepseek-v4-flash'}
-function modelChatUrl(){return `${(process.env.MODEL_BASE_URL||'https://api.deepseek.com/v1').replace(/\/$/,'')}/chat/completions`}
+function modelChatUrl(){return `${(process.env.MODEL_BASE_URL||process.env.DEEPSEEK_API_BASE_URL||process.env.QINIU_API_BASE_URL||'https://api.deepseek.com/v1').replace(/\/$/,'')}/chat/completions`}
 async function refreshInsights(res,userId){
   const data=await appStore.read();
   const source=data.messages.filter(x=>x.userId===userId&&x.role==='user').slice(-80);
