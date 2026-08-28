@@ -394,3 +394,7 @@ body { background:#fff; }
 .skill-text-card>section{padding:14px 0;border-bottom:0}
 .skill-text-card>section.skill-event{margin:0 -12px;padding:15px 12px;border:0;border-radius:16px;background:rgba(255,255,255,.58)}
 .skill-text-card>section.skill-event p{font-size:11px;color:#344f47}
+.real-data-empty{min-height:180px;padding:34px 22px;display:grid;place-content:center;text-align:center;color:#60736d}
+.real-data-empty i{font-style:normal;font-size:28px;color:#86a79d}
+.real-data-empty h3{margin:10px 0 6px;font:700 20px/1.35 'Noto Serif SC',serif;color:#29443d}
+.real-data-empty p{max-width:420px;margin:0;font-size:11px;line-height:1.8}

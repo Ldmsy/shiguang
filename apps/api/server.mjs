@@ -129,9 +129,10 @@ async function v1(req, res) {
   const cardMatch = path.match(/^\/api\/v1\/cards\/([^/]+)$/);
   if (cardMatch && req.method === 'GET') { const data=await appStore.read(); const card=owned(data.cards,cardMatch[1],userId); json(res,card?200:404,card?{card}:{code:'NOT_FOUND',message:'卡片不存在。'}); return true; }
   if (path === '/api/v1/profile/signals' && req.method === 'GET') { const data=await appStore.read(); json(res,200,{signals:data.abilities.filter(x=>x.userId===userId)}); return true; }
+  if (path === '/api/v1/insights/refresh' && req.method === 'POST') return refreshInsights(res,userId),true;
   if (path === '/api/v1/reports/monthly' && req.method === 'GET') { const data=await appStore.read(); const month=url.searchParams.get('month'); const report=data.reports.find(x=>x.userId===userId&&x.month===month); json(res,200,{report:report||null}); return true; }
-  if (path === '/api/v1/directions' && req.method === 'GET') { json(res,200,{directions:defaultDirections()}); return true; }
-  if (path === '/api/v1/people/recommendations' && req.method === 'GET') { json(res,200,{people:defaultPeople()}); return true; }
+  if (path === '/api/v1/directions' && req.method === 'GET') { const data=await appStore.read();json(res,200,{directions:data.directions.filter(x=>x.userId===userId)}); return true; }
+  if (path === '/api/v1/people/recommendations' && req.method === 'GET') { const data=await appStore.read();const people=data.profiles.filter(x=>x.userId!==userId&&x.discoveryVisible===true).map(x=>({id:x.userId,name:x.name,city:x.city,bio:x.bio,publicInterests:x.interests||[]}));json(res,200,{people}); return true; }
   if (path === '/api/v1/exports' && req.method === 'POST') {
     const input=await body(req); const job=await appStore.mutate(data=>{const e={id:newId('export'),userId,format:['txt','json'].includes(input.format)?input.format:'json',status:'ready',createdAt:Date.now()};data.exports.push(e);return e}); json(res,201,{export:job}); return true;
   }
@@ -228,6 +229,24 @@ function revokeRequestSession(req) { const match=/^Bearer\s+([a-f0-9]+)$/i.exec(
 function modelApiKey(){return process.env.MODEL_API_KEY||process.env.QINIU_API_KEY||process.env.DEEPSEEK_API_KEY}
 function modelName(){return process.env.MODEL_NAME||process.env.DEEPSEEK_MODEL||'deepseek-v4-flash'}
 function modelChatUrl(){return `${(process.env.MODEL_BASE_URL||'https://api.deepseek.com/v1').replace(/\/$/,'')}/chat/completions`}
+async function refreshInsights(res,userId){
+  const data=await appStore.read();
+  const source=data.messages.filter(x=>x.userId===userId&&x.role==='user').slice(-80);
+  if(!source.length)return json(res,422,{code:'NO_SOURCE_MESSAGES',message:'还没有足够的真实对话可以整理。'});
+  const apiKey=modelApiKey();if(!apiKey)return json(res,503,{code:'MODEL_NOT_CONFIGURED',message:'尚未配置模型。'});
+  const transcript=source.map((x,i)=>`${i+1}. ${cleanText(x.content,1200)}`).join('\n');
+  const prompt=`你是“时光”的证据整理器。只根据下面用户亲口说过的内容提取信息，不得补写、猜测或虚构事件。返回严格 JSON，不要 Markdown。结构：{"abilities":[{"label":"能力名","category":"感知/组织/关系/创造/沟通/行动/思考/表达","confidence":0到100整数,"evidence":"用户真实提到的具体事件，使用第二人称复述"}],"directions":[{"title":"方向名称","summary":"为什么来自这些真实证据"}],"monthlyReport":{"title":"一句总结","summary":"只概括已出现的变化","keywords":["词1","词2"]}}。能力最多8条、方向最多3条；证据不足就返回空数组，不要为了填满而创造。\n\n真实对话：\n${transcript}`;
+  const response=await fetch(modelChatUrl(),{method:'POST',headers:{'content-type':'application/json',authorization:`Bearer ${apiKey}`},body:JSON.stringify({model:modelName(),messages:[{role:'system',content:'你只输出可解析的 JSON，并严格遵守证据边界。'},{role:'user',content:prompt}],stream:false,max_tokens:1800,temperature:.15}),signal:AbortSignal.timeout(90_000)});
+  if(!response.ok)return json(res,502,{code:'MODEL_UNAVAILABLE',message:'AI 暂时无法整理真实数据。'});
+  const payload=await response.json();const content=payload.choices?.[0]?.message?.content||'';
+  let parsed;try{parsed=JSON.parse(content.replace(/^```(?:json)?\s*|\s*```$/g,''))}catch{return json(res,502,{code:'INVALID_MODEL_OUTPUT',message:'AI 返回的数据格式暂时无法使用。'});}
+  const now=Date.now(),month=new Date().toISOString().slice(0,7);
+  const abilities=(Array.isArray(parsed.abilities)?parsed.abilities:[]).slice(0,8).map((x,i)=>({id:`ability_${i}_${now}`,userId,label:cleanText(x.label,30),category:cleanText(x.category,20),confidence:Math.max(0,Math.min(100,Math.round(Number(x.confidence)||0))),evidence:cleanText(x.evidence,300),sourceMessageIds:source.map(m=>m.id).filter(Boolean),updatedAt:now})).filter(x=>x.label&&x.evidence);
+  const directions=(Array.isArray(parsed.directions)?parsed.directions:[]).slice(0,3).map((x,i)=>({id:`direction_${i}_${now}`,userId,title:cleanText(x.title,60),summary:cleanText(x.summary,300),updatedAt:now})).filter(x=>x.title&&x.summary);
+  const reportInput=parsed.monthlyReport||{};const report={id:`report_${month}_${now}`,userId,month,title:cleanText(reportInput.title,100),summary:cleanText(reportInput.summary,1000),keywords:(Array.isArray(reportInput.keywords)?reportInput.keywords:[]).slice(0,6).map(x=>cleanText(x,30)).filter(Boolean),updatedAt:now};
+  await appStore.mutate(db=>{db.abilities=db.abilities.filter(x=>x.userId!==userId);db.abilities.push(...abilities);db.directions=db.directions.filter(x=>x.userId!==userId);db.directions.push(...directions);db.reports=db.reports.filter(x=>!(x.userId===userId&&x.month===month));if(report.title||report.summary)db.reports.push(report)});
+  return json(res,200,{abilities,directions,report:report.title||report.summary?report:null,sourceCount:source.length,generatedAt:now});
+}
 function newId(prefix){return `${prefix}_${randomBytes(10).toString('hex')}`}
 function unitNumber(value){return typeof value==='number'&&Number.isFinite(value)&&value>=0&&value<=1}
 function activeExpressionSignal(userId,conversationId){const key=`${userId}:${conversationId}`,signal=temporaryExpressionSignals.get(key);if(!signal)return null;if(signal.expiresAt<Date.now()){temporaryExpressionSignals.delete(key);return null}return signal}
@@ -238,8 +257,6 @@ function conversationIn(data,id){return data.conversations.find(x=>x.id===id)}
 function profileFor(data,userId){return data.profiles.find(x=>x.userId===userId)||{userId,name:'',birthday:'',city:'',bio:'',interests:[],onboardingComplete:false}}
 function upsertProfile(data,userId,input,onboarding=false){let p=data.profiles.find(x=>x.userId===userId);if(!p){p={userId,name:'',birthday:'',city:'',bio:'',interests:[],onboardingComplete:false};data.profiles.push(p)}for(const key of ['name','birthday','city','bio'])if(Object.hasOwn(input,key))p[key]=cleanText(input[key],key==='bio'?500:80);if(Object.hasOwn(input,'interests'))p.interests=Array.isArray(input.interests)?input.interests.slice(0,20).map(x=>cleanText(x,40)):cleanText(input.interests,400).split(/[、,，]/).filter(Boolean);if(onboarding)p.onboardingComplete=true;p.updatedAt=Date.now();return p}
 function settingsFor(data,userId){let s=data.settings.find(x=>x.userId===userId);if(!s){s={userId,cardSchedule:{enabled:true,localTime:'21:30',timezone:'Asia/Shanghai'},privacy:{voiceInput:true,expressionAssist:false,longTermMemory:true,anonymousImprovement:false}};data.settings.push(s)}return s}
-function defaultDirections(){return[{id:'plant-content',title:'植物照护 × 内容记录',summary:'把观察与分类经验整理成容易使用的图文内容。'},{id:'community-plant',title:'社区植物互助',summary:'和同城伙伴交换经验，建立简单养护档案。'},{id:'beginner-seven-days',title:'新手七日陪伴',summary:'把第一次养植物的过程做成温和、清楚的行动清单。'}]}
-function defaultPeople(){return[{id:'zhou-ning',name:'周宁',role:'内容运营',city:'上海',online:true,publicInterests:['内容记录'],publicSkills:['内容策划','栏目运营']},{id:'a-he',name:'阿禾',role:'社区组织',city:'上海',online:false,publicInterests:['社区植物互助'],publicSkills:['活动组织','资源协调']}]}
 
 async function comfortRoute(req, res) { const result = comfort(await body(req)); return json(res, result.status, result.body); }
 export function comfort(input) { if (typeof input?.event !== 'string' || !input.event.trim()) return { status: 422, body: { code: 'INVALID_EVENT', message: '请先写下一件事' } }; return { status: 200, body: { reply: `我听见了：${input.event.trim()}`, actions: ['慢慢呼吸三次', '写下一件今天已经做到的小事'], contractVersion: '0.1.0' } }; }
