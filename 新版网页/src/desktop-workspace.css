@@ -16,7 +16,7 @@
 body { background:#fff; }
 .workspace-shell.phone-shell { width:100%; max-width:none; min-height:100svh; margin:0; padding:0; display:grid; grid-template-columns:260px minmax(0,1fr); background:var(--workspace-bg); box-shadow:none; overflow:visible; transition:grid-template-columns .38s cubic-bezier(.2,.75,.2,1),background .25s ease; }
 .workspace-shell.sidebar-collapsed{grid-template-columns:76px minmax(0,1fr)}
-.workspace-sidebar { position:sticky; top:0; height:100svh; padding:20px 14px; border-right:1px solid rgba(73,108,99,.14); background:linear-gradient(165deg,#f7fbf9 0%,#e8f2ee 52%,#f3edf4 100%); display:flex; flex-direction:column; gap:22px; z-index:11; overflow:hidden; }
+.workspace-sidebar { position:sticky; top:0; height:100svh; padding:20px 14px; border-right:1px solid rgba(73,108,99,.14); background:linear-gradient(165deg,#f7fbf9 0%,#e8f2ee 52%,#f3edf4 100%); display:flex; flex-direction:column; gap:22px; z-index:11; overflow:visible; }
 .workspace-sidebar:before,.workspace-sidebar:after { content:''; position:absolute; pointer-events:none; z-index:0; inset:-24%; }
 .workspace-sidebar:before { opacity:.68; background-image:radial-gradient(circle,rgba(52,123,106,.34) 0 1.2px,transparent 1.8px); background-size:13px 13px; mask-image:radial-gradient(ellipse at 42% 34%,#000 0 13%,rgba(0,0,0,.7) 31%,transparent 67%); -webkit-mask-image:radial-gradient(ellipse at 42% 34%,#000 0 13%,rgba(0,0,0,.7) 31%,transparent 67%); animation:sidebar-dots 14s ease-in-out infinite alternate; }
 .workspace-sidebar:after { opacity:.46; background-image:radial-gradient(circle,rgba(183,104,145,.38) 0 1px,transparent 1.7px); background-size:17px 17px; mask-image:radial-gradient(ellipse at 64% 72%,#000 0 10%,rgba(0,0,0,.62) 30%,transparent 64%); -webkit-mask-image:radial-gradient(ellipse at 64% 72%,#000 0 10%,rgba(0,0,0,.62) 30%,transparent 64%); animation:sidebar-dots-alt 18s ease-in-out infinite alternate; }
@@ -331,3 +331,20 @@ body { background:#fff; }
 }
 
 .formal-login .login-method-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:18px;padding:4px;border-radius:12px;background:#edf2ef}.formal-login .login-method-tabs button{height:36px;border:0;border-radius:9px;background:transparent;color:#7a8581;font-size:9px}.formal-login .login-method-tabs button.on{background:#fff;color:#244b40;box-shadow:0 5px 16px rgba(44,70,62,.09)}
+
+/* Ability document stays on the current page as a focused, scrollable dialog. */
+.skill-modal-layer{position:fixed;z-index:120;inset:0;display:grid;place-items:center;padding:28px;background:rgba(24,39,34,.42);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:skill-modal-in .22s ease}
+.skill-modal-dialog{position:relative;width:min(1040px,calc(100vw - 56px));max-height:calc(100svh - 56px);overflow:auto;overscroll-behavior:contain;padding:34px 38px 42px;border:1px solid rgba(255,255,255,.72);border-radius:28px;background:linear-gradient(155deg,rgba(247,252,250,.98),rgba(229,239,235,.98));box-shadow:0 32px 100px rgba(20,42,34,.3)}
+.skill-modal-dialog .detail-page{padding:0}.skill-modal-dialog .skill-detail>header{padding-right:58px}.skill-modal-dialog .ability-book{margin-bottom:36px}.skill-modal-dialog .evidence-book{margin-bottom:22px}
+.skill-modal-close{position:sticky;z-index:5;top:0;float:right;width:42px;height:42px;border:1px solid rgba(57,83,75,.13);border-radius:50%;background:rgba(255,255,255,.9);color:#355149;font-size:25px;line-height:1;box-shadow:0 8px 24px rgba(34,58,50,.13);cursor:pointer}
+@keyframes skill-modal-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(max-width:700px){.skill-modal-layer{padding:10px}.skill-modal-dialog{width:100%;max-height:calc(100svh - 20px);padding:22px 14px 30px;border-radius:22px}.skill-modal-close{width:38px;height:38px}.skill-modal-dialog .skill-detail>header{padding-right:44px}.skill-modal-dialog .ability-page-card{flex-basis:91%}}
+
+/* The narrow desktop/iPhone-preview layout can fully retract its left rail. */
+@media(min-width:560px) and (max-width:1100px){
+  .workspace-sidebar{overflow:visible!important}
+  .workspace-sidebar .sidebar-collapse{display:grid!important;position:absolute!important;left:auto;right:-13px;top:68px;place-items:center}
+  .workspace-shell.sidebar-collapsed{grid-template-columns:0 minmax(0,1fr)!important}
+  .workspace-shell.sidebar-collapsed .workspace-sidebar{width:0;padding:0;border:0;transform:translateX(-100%)}
+  .workspace-shell.sidebar-collapsed .workspace-sidebar .sidebar-collapse{display:grid!important;position:fixed!important;left:8px;right:auto;top:72px;transform:none}
+}
