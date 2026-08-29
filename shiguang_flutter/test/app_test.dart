@@ -6,11 +6,11 @@ void main() {
   testWidgets('builds the Shiguang application shell', (tester) async {
     await tester.pumpWidget(
       const ShiguangApp(
-        home: Scaffold(body: Center(child: Text('拾光 WebView'))),
+        home: Scaffold(body: Center(child: Text('我是谁 WebView'))),
       ),
     );
 
-    expect(find.text('拾光 WebView'), findsOneWidget);
+    expect(find.text('我是谁 WebView'), findsOneWidget);
   });
 
   test('uses the bundled WebView demo on supported platforms', () {

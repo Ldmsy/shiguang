@@ -1,0 +1,346 @@
+/* Complete tactile visual layer for the current WebView app. */
+:root{--felt-ink:#30372f;--felt-green:#496653;--felt-sage:#aeb8a1;--felt-clay:#c88469;--felt-blue:#b8ced0;--felt-mustard:#d3a33d;--felt-paper:#f5eee3;--felt-edge:#756d6030;--felt-shadow:#4c463c2b}
+html{scroll-behavior:smooth;background:#e9e2d7}
+body{color:var(--felt-ink);background:#ece5da url('./assets/felt-ui/material-ivory-botanical-v1.png') center top/760px auto repeat}
+button,input,textarea{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif}
+button{transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}button:active{transform:translateY(1px)}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #6d877044;outline-offset:2px}
+
+/* App shell and navigation */
+.workspace-shell.phone-shell{background-color:var(--felt-paper)!important;background-image:linear-gradient(180deg,#fffdf76b,#eee5d761),url('./assets/felt-ui/material-ivory-botanical-v1.png')!important;background-size:auto,720px auto!important;color:var(--felt-ink)}
+.workspace-main{background:transparent!important}
+.app-head{position:sticky;top:0;z-index:12;height:64px!important;padding:7px 16px!important;border-bottom:1px solid #71695d26!important;background-color:#f5eee4e8!important;background-image:url('./assets/felt-ui/material-ivory-botanical-v1.png')!important;background-size:560px auto!important;box-shadow:0 5px 16px #4e483e15!important;backdrop-filter:blur(10px)}
+.app-head .menu-trigger{width:43px!important;height:43px!important;border:1px solid #726b6030!important;border-radius:13px!important;background:#eee9df url('./assets/felt-ui/felt-pressed-neutral-v2.png') center/cover!important;color:#40594b!important;box-shadow:inset 1px 1px #fff, inset 0 -2px #6a62551c,0 5px 10px #4d473e1f!important}
+.app-head .brand-menu{gap:9px!important}.app-head .brand-menu>i{display:grid;place-items:center;width:34px!important;height:34px!important;border:1px solid #fff8!important;border-radius:10px!important;background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;color:#fff!important;box-shadow:inset 1px 1px #fff5,0 4px 9px #3e4d4129!important}.app-head .brand b{font:700 15px 'Songti SC','STSong','Noto Serif SC',serif!important;color:#30443a}.app-head .brand span{color:#7b8178!important;letter-spacing:.12em}.app-head .privacy{color:#637168!important;font-size:8px!important}
+.workspace-sidebar{background-color:#f1eadf!important;background-image:linear-gradient(165deg,#fffaf0bc,#e8e7d7c7),url('./assets/felt-ui/material-ivory-botanical-v1.png')!important;background-size:auto,620px auto!important;border-right:1px solid #6f685c32!important;box-shadow:18px 0 38px #36342e2e!important}
+.workspace-sidebar:before{display:none!important}.workspace-sidebar .side-brand>i{background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;border:1px solid #fff7!important;box-shadow:inset 1px 1px #fff5,0 7px 14px #3d493f35!important}.workspace-sidebar nav button{border-radius:15px!important;color:#5e685f!important}.workspace-sidebar nav button.on{border:1px solid #716a5c31!important;background:#f4efe5 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/480px auto!important;color:#345042!important;box-shadow:inset 1px 1px #fff,0 7px 14px #4c473e20!important}.workspace-sidebar nav button i{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:#dfe6d9 url('./assets/felt-ui/material-sage-botanical-v1.png') center/cover;box-shadow:inset 1px 1px #fff8,0 3px 7px #4c514725}
+.workspace-sidebar .auto-card-settings{border:1px solid #71695d2d!important;border-radius:18px!important;background:#f6f0e6 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/520px auto!important;box-shadow:inset 1px 1px #fff,0 9px 18px #49443b1d!important}.workspace-sidebar input{border:1px solid #756d6130!important;border-radius:11px!important;background:#fffaf0cc!important}.workspace-sidebar footer button{border-bottom:1px dashed #71695d35!important}.sidebar-collapse{border:1px solid #71695d30!important;background:#f5efe5 url('./assets/felt-ui/felt-pressed-neutral-v2.png') center/cover!important;box-shadow:0 5px 11px #49443b22!important}
+
+/* Conversation */
+#talk .conversation-workspace{background:transparent!important}
+#talk .cloud-ip-stage{margin:10px 14px 16px!important;border:1px solid #fff8!important;border-radius:24px!important;background-color:#dce9e7!important;background-image:linear-gradient(155deg,#f8faf7a8,#dce9e5a6),url('./assets/felt-ui/material-blue-botanical-v1.png')!important;background-size:auto,cover!important;box-shadow:inset 1px 1px #fff, inset 0 -3px #62706a1a,0 12px 25px #49534e25!important;overflow:hidden}
+#talk .conversation-workspace .bubble{border:1px solid #746d6130!important;background-color:#f3ede3!important;background-image:url('./assets/felt-ui/material-ivory-botanical-v1.png')!important;background-size:520px auto!important;box-shadow:inset 1px 1px #fff, inset 0 -2px #6a62551a,0 8px 18px #4a453c20!important}
+#talk .conversation-workspace .bubble:before{inset:5px!important;border-style:solid!important;border-color:#fff5!important}
+#talk .conversation-workspace .bubble.user{background-color:#526957!important;background-image:url('./assets/felt-ui/material-forest-botanical-v1.png')!important;background-size:cover!important;border-color:#3f5747!important;color:#fffaf1!important;box-shadow:inset 1px 1px #fff4,inset 0 -2px #172d2266,0 9px 20px #37443a2e!important}
+#talk .conversation-workspace .input-dock{margin:14px 12px 18px!important;border:1px solid #736b5e32!important;border-radius:24px!important;background-color:#f2ece2!important;background-image:url('./assets/felt-ui/material-ivory-botanical-v1.png')!important;background-size:600px auto!important;box-shadow:inset 1px 1px #fff,inset 0 -2px #6b635720,0 12px 25px #49443b25!important}
+#talk .conversation-workspace .input-dock:after{border-style:solid!important;border-color:#fff5!important}.signals button i,.quick-card-button i{border:1px solid #fff8!important;border-radius:10px!important;background:#dce5d8 url('./assets/felt-ui/material-sage-botanical-v1.png') center/cover!important;box-shadow:inset 1px 1px #fff8,0 4px 8px #4a504629!important}.composer-actions .chat-send{background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;border:1px solid #fff5!important;box-shadow:inset 1px 1px #fff5,inset 0 -2px #172d2255,0 6px 12px #35443a2c!important}
+
+/* Growth cards and calendar */
+.report-reel-first>header h2,.growth-calendar>header h2,.portrait-ability-card>header h2,.friend-direction-teaser h2{font-family:'Songti SC','STSong','Noto Serif SC',serif!important;color:#30372f!important}
+.growth-calendar{margin:22px 10px 32px!important;padding:22px 14px!important;border:1px solid #71695d2f!important;border-radius:24px!important;background:#f4eee4 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/680px auto!important;box-shadow:inset 1px 1px #fff,0 15px 32px #4b463c22!important}.growth-calendar>header{border-bottom:1px dashed #71695d35!important}.calendar-nav button{border:1px solid #71695d2d!important;border-radius:10px!important;background:#dfe6d9 url('./assets/felt-ui/material-sage-botanical-v1.png') center/cover!important;color:#435c4c!important;box-shadow:inset 1px 1px #fff8,0 3px 7px #4b514627!important}.calendar-day{border-color:#766e6128!important;background:#fffaf08c!important;color:#596159!important}.calendar-day.has-card{border:1px solid #fff7!important;color:#3f5044!important;background:#dfe6d9 url('./assets/felt-ui/material-sage-botanical-v1.png') center/cover!important;box-shadow:inset 1px 1px #fff8,inset 0 -2px #65705f20,0 4px 8px #4a4d4425!important}.calendar-day.has-card.card-tone-1{background-image:url('./assets/felt-ui/material-clay-botanical-v1.png')!important;color:#5d4034!important}.calendar-day.has-card.card-tone-2{background-image:url('./assets/felt-ui/material-blue-botanical-v1.png')!important;color:#3c5557!important}.monthly-summary-button{background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;border:1px solid #fff6!important;border-radius:13px!important;box-shadow:inset 1px 1px #fff5,inset 0 -3px #172d2259,0 7px 14px #34443a2f!important}.monthly-summary-button:before{display:none!important}
+
+/* Ability field without mixing the cloud character into the archive language. */
+.portrait-ability-card{margin:16px 10px 24px!important;border:1px solid #71695d30!important;border-radius:25px!important;background:#f3ede3 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/680px auto!important;box-shadow:inset 1px 1px #fff,0 16px 35px #4a453c24!important}.portrait-ability-card:before{display:none!important}.portrait-ability-card .ability-sky{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;height:auto!important;min-height:0!important;padding:18px!important;border:1px solid #71695d28!important;border-radius:22px!important;background:#e7ece3 url('./assets/felt-ui/felt-card-surface-v1.png') center/cover!important;box-shadow:inset 1px 1px #fff,0 8px 18px #49483f1a!important}.portrait-ability-card .ability-main-cloud,.portrait-ability-card .ability-glint{display:none!important}.portrait-ability-card .ability-bubble{position:relative!important;inset:auto!important;transform:none!important;width:100%!important;height:auto!important;aspect-ratio:1.08!important;border:1px solid #fff8!important;border-radius:18px!important;background:#dfe6d9 url('./assets/felt-ui/material-sage-botanical-v1.png') center/cover!important;box-shadow:inset 1px 1px #fff8,inset 0 -3px #66705f20,0 7px 14px #484c432a!important}.portrait-ability-card .ability-bubble:nth-of-type(2n){background-image:url('./assets/felt-ui/material-clay-botanical-v1.png')!important}.portrait-ability-card .ability-bubble:nth-of-type(3n){background-image:url('./assets/felt-ui/material-blue-botanical-v1.png')!important}.portrait-ability-card .ability-bubble:nth-of-type(4n){background-image:url('./assets/felt-ui/material-mustard-geometric-v1.png')!important}.portrait-ability-card .ability-bubble:after{inset:5px!important;border-style:solid!important;border-color:#fff5!important}.portrait-ability-card>footer{border-top:1px dashed #71695d32!important}
+
+/* Social card and discovery */
+.plain-social-card,.felt-social-card{border:1px solid #71695d30!important;border-radius:25px!important;box-shadow:inset 1px 1px #fff,0 16px 35px #4a453c24!important}.social-card-avatar,.partner-avatar{border:1px solid #fff8!important;border-radius:16px!important;background:#8a806f url('./assets/felt-ui/material-clay-botanical-v1.png') center/cover!important;box-shadow:inset 1px 1px #fff8,inset 0 -3px #60473b28,0 7px 14px #4a443c2d!important}.friend-direction-teaser>button,.partner-card-actions button,.social-profile-card footer button{border:1px solid #71695d2d!important;border-radius:13px!important;background:#dfe6d9 url('./assets/felt-ui/material-sage-botanical-v1.png') center/cover!important;color:#3f5a49!important;box-shadow:inset 1px 1px #fff8,inset 0 -2px #66705f1c,0 5px 11px #4a4d4420!important}.social-card-primary,.partner-card-actions .partner-chat-entry{background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;color:#fff!important;border-color:#405745!important}.direction-discovery{background:#f3ede3 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/680px auto!important}.direction-discovery:before{display:none!important}.compact-direction-list>button{border:1px solid #fff8!important;background:#dfe6d9 url('./assets/felt-ui/material-sage-botanical-v1.png') center/cover!important;box-shadow:inset 1px 1px #fff8,inset 0 -3px #66705f1e,0 8px 17px #484b4324!important}.compact-direction-list>button:nth-child(2){background-image:url('./assets/felt-ui/material-clay-botanical-v1.png')!important}.compact-direction-list>button:nth-child(3){background-image:url('./assets/felt-ui/material-blue-botanical-v1.png')!important}.compact-direction-list>button:nth-child(4){background-image:url('./assets/felt-ui/material-mustard-geometric-v1.png')!important}.partner-list article,.partner-brief,.partner-chat{background:#f3ede3 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/600px auto!important;border:1px solid #71695d2d!important;box-shadow:inset 1px 1px #fff,0 10px 22px #49443b20!important}
+
+/* Shared detail pages and forms */
+.detail-page{padding-top:28px!important}.detail-page>header{margin:0 10px 22px!important}.detail-page>header>span{color:#687e70!important;letter-spacing:.14em!important}.detail-page>header h1{max-width:9em!important;margin:9px 0!important;font:700 clamp(31px,9vw,44px)/1.18 'Songti SC','STSong','Noto Serif SC',serif!important;letter-spacing:-.045em!important;color:#30372f!important;text-wrap:balance}.detail-page>header p{max-width:32em!important;color:#73766e!important;line-height:1.75!important}
+.profile-settings-form{margin:0 10px 34px!important;padding:20px!important;border:1px solid #71695d30!important;border-radius:24px!important;background:#f3ede3 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/680px auto!important;box-shadow:inset 1px 1px #fff,0 15px 32px #4a453c22!important}.profile-avatar-editor{border-bottom:1px dashed #71695d35!important}.profile-avatar-editor>i{background:#d8e3df url('./assets/felt-ui/material-blue-botanical-v1.png') center/cover!important;border:1px solid #fff8!important;border-radius:18px!important;color:#45605b!important;box-shadow:inset 1px 1px #fff8,inset 0 -3px #6172701f,0 7px 14px #484d4925!important}.profile-form-grid label{color:#6e746c!important}.profile-form-grid input,.profile-form-grid textarea,.partner-composer textarea{border:1px solid #746d6130!important;border-radius:13px!important;background:#faf5ec url('./assets/felt-ui/material-ivory-botanical-v1.png') center/500px auto!important;color:#333931!important;box-shadow:inset 0 2px 4px #625b4f18!important}.profile-settings-form>button,.partner-composer button{border:1px solid #fff5!important;border-radius:14px!important;background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;color:#fff!important;box-shadow:inset 1px 1px #fff5,inset 0 -3px #172d2255,0 7px 14px #34443a2e!important}
+.profile-settings-form .profile-form-grid input,
+.profile-settings-form .profile-form-grid textarea{
+  background:#faf5ec!important;
+}
+.control-list,.export-options,.vocabulary-grid,.memory-list{margin-inline:10px!important}.control-list article,.export-options>button,.vocabulary-grid>button,.memory-list>article{border:1px solid #71695d2d!important;border-radius:17px!important;background:#f2ece2 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/580px auto!important;box-shadow:inset 1px 1px #fff,0 8px 17px #49443b1d!important}.control-list article:nth-child(2n),.export-options>button:nth-child(2),.vocabulary-grid>button:nth-child(2n){background:#dfe8e6 url('./assets/felt-ui/material-blue-botanical-v1.png') center/cover!important}.export-options>button:nth-child(3){background:#e9ded2 url('./assets/felt-ui/material-clay-botanical-v1.png') center/cover!important}.export-options i{border-radius:11px!important;background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;color:#fff!important;box-shadow:inset 1px 1px #fff5,0 4px 8px #36443a2d!important}.switch{border:1px solid #71695d30!important;background:#d7d4cd!important;box-shadow:inset 0 2px 4px #5f584c22!important}.switch.on{background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important}.real-data-empty{border:1px solid #71695d2d!important;border-radius:20px!important;background:#f2ece2 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/580px auto!important;box-shadow:inset 1px 1px #fff,0 10px 22px #49443b1d!important}
+.control-list .switch i{transform:translateY(-1px)!important}
+.control-list .switch.on i{transform:translate(16px,-1px)!important}
+.control-list article:nth-child(2n){
+  background-color:#dfe8e6!important;
+  background-image:linear-gradient(#f7f3eb80,#f7f3eb80),url('./assets/felt-ui/material-blue-botanical-v1.png')!important;
+  background-position:center!important;
+  background-size:auto,cover!important;
+}
+.export-options>button:nth-child(3){
+  background-color:#ead8ca!important;
+  background-image:linear-gradient(#f2e1d2a8,#f2e1d2a8),url('./assets/felt-ui/material-clay-botanical-v1.png')!important;
+  background-position:center!important;
+  background-size:auto,cover!important;
+}
+
+/* Journal, archive and modals */
+.journal-cover,.selected-lines{border:1px solid #71695d2d!important;border-radius:22px!important;box-shadow:inset 1px 1px #fff,0 12px 26px #49443b20!important}.selected-lines{margin-inline:10px!important;background:#f3ede3 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/620px auto!important}.history-drawer{background:#f2ebe0 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/640px auto!important;border-right:1px solid #71695d32!important}.history-drawer .new-chat{border:1px solid #fff5!important;border-radius:13px!important;background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;box-shadow:inset 1px 1px #fff5,inset 0 -3px #172d2255,0 7px 14px #34443a2e!important}.history-list section>button{border:1px solid #71695d29!important;border-radius:14px!important;background:#f7f1e7 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/500px auto!important;box-shadow:inset 1px 1px #fff,0 6px 13px #49443b1b!important}.history-list section>button.active{background:#dfe6d9 url('./assets/felt-ui/material-sage-botanical-v1.png') center/cover!important}.overlay{background:#2e332e78!important;backdrop-filter:blur(6px)}.sheet,.skill-text-card{border:1px solid #71695d30!important;background:#f3ede3 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/680px auto!important;box-shadow:inset 1px 1px #fff,0 22px 50px #282a263d!important}.sheet .primary,.skill-text-card footer button{border:1px solid #fff5!important;border-radius:13px!important;background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;box-shadow:inset 1px 1px #fff5,inset 0 -3px #172d2255,0 7px 14px #34443a2e!important}.mood-sheet>div>button{border:1px solid #fff8!important;border-radius:16px!important;background:#dfe6d9 url('./assets/felt-ui/material-sage-botanical-v1.png') center/cover!important;box-shadow:inset 1px 1px #fff8,0 6px 13px #494b4322!important}.mood-sheet>div>button:nth-child(2n){background-image:url('./assets/felt-ui/material-clay-botanical-v1.png')!important}.mood-sheet>div>button:nth-child(3n){background-image:url('./assets/felt-ui/material-blue-botanical-v1.png')!important}
+.history-list section>button{background:#f7f1e7!important}
+.history-list section>button.active{background:#dfe6d9!important}
+
+/* Onboarding uses the same material system as login. */
+.onboarding-screen{background:#f4eee4 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/720px auto repeat!important}.onboarding-screen>section{border:1px solid #71695d30!important;background:#f5efe5d9 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/660px auto!important;box-shadow:inset 1px 1px #fff,0 18px 40px #4a453c25!important}.onboarding-screen .login-mark{background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;border:1px solid #fff7!important;box-shadow:inset 1px 1px #fff5,0 7px 14px #34443a30!important}.onboarding-grid input,.onboarding-grid textarea{border:1px solid #746d6130!important;background:#faf5ec url('./assets/felt-ui/material-ivory-botanical-v1.png') center/500px auto!important;box-shadow:inset 0 2px 4px #625b4f18!important}.onboarding-form>button{border:1px solid #fff5!important;border-radius:14px!important;background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;box-shadow:inset 1px 1px #fff5,inset 0 -3px #172d2255,0 7px 14px #34443a2e!important}
+
+/* Onboarding review pass 03: approved auth-page density and contrast. */
+.onboarding-screen{
+  position:relative;
+  background-color:#f4efe7!important;
+  background-image:radial-gradient(circle at 12% 5%,#fffdf8 0 13%,transparent 38%),linear-gradient(180deg,#f7f2eb 0%,#f1ebe2 100%)!important;
+}
+.onboarding-screen:before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.11;
+  background:url('./assets/felt-ui/felt-card-surface-v1.png') center/1100px auto repeat;
+  mix-blend-mode:multiply;
+}
+.onboarding-screen>section{
+  position:relative;
+  z-index:1;
+  border-color:#71695d24!important;
+  background-color:#fbf7f0!important;
+  background-image:linear-gradient(165deg,#fffdfac9,#f5eee5b8)!important;
+  box-shadow:inset 1px 1px #fff,0 16px 34px #4a453c1c!important;
+}
+.onboarding-screen .onboarding-cloud-mark{
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  box-sizing:border-box;
+  padding:5px;
+  border-color:#ffffffb8!important;
+  background:#e7efe9!important;
+  box-shadow:inset 1px 1px #fff,0 7px 14px #34443a25!important;
+}
+.onboarding-screen .onboarding-cloud-mark img{
+  display:block;
+  width:44px;
+  height:44px;
+  max-width:100%;
+  max-height:100%;
+  margin:auto;
+  object-fit:contain;
+  transform:translateY(-2px);
+  filter:drop-shadow(0 4px 4px #46514835);
+}
+.onboarding-grid input,.onboarding-grid textarea{
+  border-color:#746d6126!important;
+  background-color:#f8f4ed!important;
+  background-image:linear-gradient(145deg,#fffdfad9,#f2ece3d9)!important;
+  box-shadow:inset 1px 1px 1px #fff,inset 0 -2px 2px #665e5017,0 5px 10px #4e483e14!important;
+}
+
+/* Preserve the approved report artwork while giving its controls physical depth. */
+.felt-mode-switch{border:1px solid #71695d2d!important;background:#e7e5dc url('./assets/felt-ui/felt-pressed-neutral-v2.png') center/cover!important;box-shadow:inset 0 2px 4px #5c55491b!important}.felt-mode-switch button.on{border:1px solid #fff8!important;background:#f5efe5 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/480px auto!important;box-shadow:inset 1px 1px #fff,0 5px 11px #49443b20!important}.felt-cloud-badge{display:none!important}.felt-single-copy{padding-top:36px!important}.felt-controls button{border:1px solid #71695d2d!important;background:#dfe6d9 url('./assets/felt-ui/material-sage-botanical-v1.png') center/cover!important;box-shadow:inset 1px 1px #fff8,0 4px 9px #494b4320!important}
+
+@media(max-width:500px){.detail-page{padding-top:23px!important}.detail-page>header{margin-bottom:18px!important}.detail-page>header h1{font-size:34px!important}.profile-settings-form{padding:17px!important}.portrait-ability-card .ability-sky{gap:9px!important;padding:13px!important}.growth-calendar{padding:18px 10px!important}}
+
+/* Contrast corrections found during the full-page visual audit. */
+.felt-social-card footer button{background:#f4eee4 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/480px auto!important;color:#365142!important}
+.felt-social-card footer .social-card-primary{background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;color:#fff!important;border-color:#405745!important}
+.compact-direction-list>button{background-image:linear-gradient(#ffffff45,#ffffff45),url('./assets/felt-ui/material-sage-botanical-v1.png')!important;background-position:center!important;background-size:auto,cover!important;color:#30483a!important}
+.compact-direction-list>button:nth-child(2){background-color:#ead8ca!important;background-image:linear-gradient(#f2e1d2a8,#f2e1d2a8),url('./assets/felt-ui/material-clay-botanical-v1.png')!important}
+.compact-direction-list>button:nth-child(3){background-image:linear-gradient(#ffffff55,#ffffff55),url('./assets/felt-ui/material-blue-botanical-v1.png')!important}
+.compact-direction-list>button:nth-child(4){background-image:linear-gradient(#ffffff45,#ffffff45),url('./assets/felt-ui/material-mustard-geometric-v1.png')!important}
+.vocabulary-grid>button:nth-child(3n){background:#e9ded2 url('./assets/felt-ui/material-clay-botanical-v1.png') center/cover!important}
+.vocabulary-grid>button:nth-child(4n){background:#eadfae url('./assets/felt-ui/material-mustard-geometric-v1.png') center/cover!important}
+.vocabulary-grid>button:nth-child(3n){
+  background-color:#ead8ca!important;
+  background-image:linear-gradient(#f2e1d2a8,#f2e1d2a8),url('./assets/felt-ui/material-clay-botanical-v1.png')!important;
+  background-position:center!important;
+  background-size:auto,cover!important;
+}
+
+/* Second audit: overlays, history and partner communication states. */
+.history-drawer{padding:76px 14px 20px!important}.history-drawer>header{padding-top:8px!important}.history-drawer h2{font-family:'Songti SC','STSong','Noto Serif SC',serif!important;color:#30372f!important}
+.partner-card-actions .partner-profile-entry{background:#f4eee4 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/480px auto!important;color:#304c3d!important}.partner-card-actions .partner-profile-entry span,.partner-card-actions .partner-profile-entry b{color:#304c3d!important}.partner-card-actions .partner-chat-entry,.partner-card-actions .partner-chat-entry span,.partner-card-actions .partner-chat-entry b{color:#fff!important}
+.partner-room .partner-chat{background-color:#eee8dd!important;background-image:url('./assets/felt-ui/felt-card-surface-v1.png')!important;background-position:center!important;background-size:cover!important}.partner-chat-log article{background:#f7f1e7 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/480px auto!important;box-shadow:inset 1px 1px #fff,0 6px 13px #49443b1b!important}.partner-chat-log article.me{background:#526957 url('./assets/felt-ui/material-forest-botanical-v1.png') center/cover!important;color:#fff!important}.partner-composer{background:#f7f1e7 url('./assets/felt-ui/material-ivory-botanical-v1.png') center/480px auto!important;border:1px solid #71695d2d!important;box-shadow:inset 1px 1px #fff,0 7px 15px #49443b1c!important}
+.partner-chat-log article:not(.me){background:#f7f1e7!important}
+.partner-composer{background:#f7f1e7!important}
+.partner-composer textarea{background:#faf5ec!important}
+.mood-sheet>div>button:after{display:none!important}.mood-sheet>div>button>i{opacity:.82!important}.mood-sheet>div>button.selected{color:#fff!important;filter:saturate(.9) brightness(.82)}
+.report-sheet .card-evidence{border:1px solid #fff8!important;background-color:#dce7e5!important;background-image:linear-gradient(#dce7e533,#dce7e533),url('./assets/felt-ui/material-blue-botanical-v1.png')!important;background-position:center!important;background-size:auto,cover!important;box-shadow:inset 1px 1px #fff8,inset 0 -3px #60706c1e,0 8px 17px #454c4923!important}
+
+/* Talk review pass 04: one continuous cloud field, dark to light. */
+#talk .conversation-workspace{
+  overflow:hidden;
+  background:#f5f1ea!important;
+}
+#talk .conversation-workspace .talk-flow{
+  isolation:isolate;
+  background-color:#f5f1ea!important;
+  background-image:linear-gradient(180deg,#78989c 0%,#9fb7b5 22%,#c7d3cb 43%,#e6e5d9 65%,#f5f0e8 84%,#f8f4ed 100%)!important;
+  box-shadow:none!important;
+}
+#talk .conversation-workspace .talk-flow:before{
+  content:'';
+  position:absolute;
+  z-index:0;
+  inset:0;
+  opacity:.22!important;
+  background:url('./assets/felt-ui/material-blue-botanical-v1.png') center top/cover no-repeat!important;
+  -webkit-mask-image:linear-gradient(180deg,#000 0 28%,#0008 48%,transparent 72%);
+  mask-image:linear-gradient(180deg,#000 0 28%,#0008 48%,transparent 72%);
+  pointer-events:none;
+}
+#talk .conversation-workspace .ocean-motion{
+  z-index:0;
+  opacity:.08!important;
+  filter:saturate(.45) blur(14px)!important;
+}
+#talk .cloud-ip-stage{
+  position:relative;
+  z-index:2;
+  flex:0 0 31%;
+  min-height:185px;
+  margin:0!important;
+  padding:10px 16px 0!important;
+  overflow:hidden;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+#talk .cloud-ip-stage:before{display:none!important}
+#talk .cloud-scene{
+  max-width:100%;
+  margin:auto;
+  filter:drop-shadow(0 20px 20px #334a4b35)!important;
+}
+#talk .conversation-workspace .conversation,
+#talk .conversation-workspace .input-dock{
+  position:relative;
+  z-index:2;
+}
+
+/* Talk surface refinement: match the approved auth-field material density. */
+#talk .conversation-workspace .bubble.ai{
+  background-color:#f3ede3!important;
+  background-image:linear-gradient(145deg,#fffdfad6,#eee6dbd6),url('./assets/felt-ui/felt-card-surface-v1.png')!important;
+  background-position:center!important;
+  background-size:auto,900px auto!important;
+  box-shadow:inset 1px 1px 1px #fff,inset 0 -2px 2px #665e5017,0 8px 18px #4a453c20!important;
+}
+#talk .conversation-workspace .bubble.user{
+  background-color:#526957!important;
+  background-image:linear-gradient(145deg,#647866dc,#405746e8),url('./assets/felt-ui/felt-card-surface-v1.png')!important;
+  background-position:center!important;
+  background-size:auto,900px auto!important;
+  border-color:#3f5747!important;
+  color:#fffaf1!important;
+  box-shadow:inset 1px 1px 1px #ffffff4d,inset 0 -2px 2px #172d225c,0 9px 20px #37443a2e!important;
+}
+#talk .conversation-workspace .input-dock{
+  background-color:#f2ece2!important;
+  background-image:linear-gradient(145deg,#fffdfad6,#eee6dbd6),url('./assets/felt-ui/felt-card-surface-v1.png')!important;
+  background-position:center!important;
+  background-size:auto,980px auto!important;
+  box-shadow:inset 1px 1px 1px #fff,inset 0 -2px 2px #665e5017,0 11px 23px #49443b22!important;
+}
+
+/* Header and horizontal rhythm: no duplicate mark, equal safe margins. */
+.app-head .brand-menu{
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  gap:0!important;
+  justify-self:start!important;
+}
+.app-head .brand-menu>i{display:none!important}
+#talk .conversation-workspace .input-dock{
+  align-self:center;
+  width:calc(100% - 24px)!important;
+  margin:14px 12px 18px!important;
+  box-sizing:border-box;
+}
+#talk .conversation-workspace .bubble.user:after{display:none!important}
+
+/* Sidebar alignment and cloud marks: keep every asset inside its banner. */
+.workspace-sidebar .side-brand{padding-inline:15px!important}
+.workspace-sidebar .side-brand>i,
+.social-card-code{
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  place-items:center!important;
+}
+.workspace-sidebar .side-brand>i img,
+.social-card-code img{
+  display:block!important;
+  width:88%!important;
+  height:88%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+@media(max-width:699px){
+  .workspace-sidebar .side-brand{
+    padding-inline:17px!important;
+    transform:translateX(3.4px)!important;
+  }
+}
+
+/* Ability field: keep Ivy's cloud-centred composition with five surrounding signals. */
+.portrait-ability-card .ability-sky{
+  position:relative!important;
+  display:block!important;
+  height:430px!important;
+  min-height:430px!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border:1px solid #71695d28!important;
+  border-radius:22px!important;
+  background-color:#e7ece3!important;
+  background-image:radial-gradient(ellipse at 50% 58%,#dbe9e0c9,transparent 38%),linear-gradient(155deg,#f8f2e8d9,#e7e4d5c7 58%,#e0e9e1c9),url('./assets/felt-ui/felt-card-surface-v1.png')!important;
+  background-position:center!important;
+  background-size:auto,auto,cover!important;
+  box-shadow:inset 1px 1px #fff,0 8px 18px #49483f1a!important;
+}
+.portrait-ability-card .ability-main-cloud{
+  display:block!important;
+  position:absolute!important;
+  z-index:3!important;
+  left:50%!important;
+  top:50%!important;
+  width:220px!important;
+  height:120px!important;
+  transform:translate(-50%,-50%)!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.portrait-ability-card .ability-cloud-delivery-art{
+  display:block!important;
+  width:195px!important;
+  height:195px!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+}
+.portrait-ability-card .ability-glint{display:block!important;z-index:2!important}
+.portrait-ability-card .ability-bubble{
+  position:absolute!important;
+  inset:auto!important;
+  width:78px!important;
+  height:78px!important;
+  aspect-ratio:1!important;
+  transform:none!important;
+  animation:none!important;
+  border-radius:18px!important;
+}
+.portrait-ability-card .bubble-0{left:2%!important;top:20%!important}
+.portrait-ability-card .bubble-1{left:29%!important;top:4%!important}
+.portrait-ability-card .bubble-2{left:auto!important;right:16%!important;top:5%!important}
+.portrait-ability-card .bubble-3{left:auto!important;right:2%!important;top:29%!important}
+.portrait-ability-card .bubble-4{left:3%!important;top:58%!important}
+.portrait-ability-card .glint-a{left:20%!important;top:53%!important}
+.portrait-ability-card .glint-b{right:17%!important;top:55%!important}
+
+/* Ability signals: 10% smaller, using the approved landscape palette. */
+.portrait-ability-card .ability-bubble{
+  width:70.2px!important;
+  height:70.2px!important;
+}
+.portrait-ability-card .bubble-0,
+.portrait-ability-card .bubble-4{
+  background-color:#aeb59b!important;
+  background-image:linear-gradient(#aeb59bb8,#aeb59bb8),url('./assets/felt-ui/material-sage-botanical-v1.png')!important;
+}
+.portrait-ability-card .bubble-1{
+  background-color:#d48668!important;
+  background-image:linear-gradient(#d48668b8,#d48668b8),url('./assets/felt-ui/material-clay-botanical-v1.png')!important;
+}
+.portrait-ability-card .bubble-2{
+  background-color:#b8ced0!important;
+  background-image:linear-gradient(#b8ced0b8,#b8ced0b8),url('./assets/felt-ui/material-blue-botanical-v1.png')!important;
+}
+.portrait-ability-card .bubble-3{
+  background-color:#d3a33d!important;
+  background-image:linear-gradient(#d3a33db8,#d3a33db8),url('./assets/felt-ui/material-mustard-geometric-v1.png')!important;
+}
