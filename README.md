@@ -1,5 +1,11 @@
 # 模序前后端协作实验
 
+## shiguang_app 功能截图
+
+评委和开发者可直接查看 [`screenshots/`](./screenshots/) 中的 **shiguang_app 全功能截图包**，包含 20 张统一 iPhone 尺寸的清晰页面截图及 ZIP 下载包。
+
+![shiguang_app 对话主页](./screenshots/shiguang_app_功能全景_2026-08-30/01-照见自己-对话主页.png)
+
 当前仓库已经接入“拾光”移动端 UI，并保留原有的最小前后端契约实验。Node 服务会直接提供 `新版网页/`，同时提供手机号账户接口和“时光”DeepSeek 流式聊天接口。
 
 ## 本地运行
