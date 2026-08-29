@@ -1,58 +1,103 @@
-# 模序前后端协作实验
+# 我是谁 · AI 私人成长档案
 
-## shiguang_app 功能截图
+“我是谁”是一款以真实对话为起点的个人成长陪伴应用。它帮助用户记录当下、整理情绪与生活经验，从对话中发现能力线索，并将值得保留的片段沉淀为成长卡片、月度回顾和年度档案。
 
-评委和开发者可直接查看 [`screenshots/`](./screenshots/) 中的 **shiguang_app 全功能截图包**，包含 20 张统一 iPhone 尺寸的清晰页面截图及 ZIP 下载包。
+项目采用 **Flutter + WebView** 封装结构，可运行于 iOS、Android、macOS 和 Windows；同时提供腾讯云网页体验版，便于评委和外部用户直接测试。
 
-![shiguang_app 对话主页](./screenshots/shiguang_app_功能全景_2026-08-30/01-照见自己-对话主页.png)
+## 在线体验
 
-当前仓库已经接入“拾光”移动端 UI，并保留原有的最小前后端契约实验。Node 服务会直接提供 `新版网页/`，同时提供手机号账户接口和“时光”DeepSeek 流式聊天接口。
+- 腾讯云演示：[打开“我是谁”移动端体验](https://a-d7g81pr41f2b54449-1475901646.tcloudbaseapp.com/demo/?v=20260829-2251)
+- GitHub Topic：`shenicest-fission`
 
-## 本地运行
+### 测试账号
+
+| 登录方式 | 测试数据 |
+| --- | --- |
+| 手机号 | `13800138000` |
+| 密码 | `Shiguang2026!` |
+| 页面验证码 | `202608` |
+
+本地 Flutter 内置演示版也支持“本设备一键登录”。演示内容使用假数据，不会发送真实短信。
+
+## 核心功能
+
+- **照见自己**：与云朵伙伴进行陪伴式对话，支持文字、语音入口和表情辅助。
+- **收入卡片**：把对话中值得保留的时刻收录为成长卡片。
+- **成长卡片**：按日历查看往日记录，并生成月度、年度文字回顾。
+- **我即宝藏**：从真实对话中整理观察、表达、照护、行动与关系等能力线索。
+- **个人档案与记忆**：集中保存个人资料、重要句子、成长证据与历史记录。
+- **寻找伯牙**：选择探索方向，查看推荐同好、公开资料并进入聊天窗口。
+- **隐私与导出**：管理摄像头权限，并支持 TXT、PDF、JSON 等内容导出入口。
+- **跨平台运行**：同一套 Flutter 工程覆盖 iOS、Android、macOS 和 Windows。
+
+## 功能截图
+
+仓库内提供 20 张统一采用 393 × 852 iPhone 视口的清晰截图：
+
+- [查看完整功能截图目录](./screenshots/)
+- [下载完整截图 ZIP](./screenshots/shiguang_app-功能全景截图-2026-08-30.zip)
+
+| 照见自己 | 成长卡片 | 能力线索 | 寻找伯牙 |
+| --- | --- | --- | --- |
+| ![照见自己](./screenshots/shiguang_app_功能全景_2026-08-30/01-照见自己-对话主页.png) | ![成长卡片](./screenshots/shiguang_app_功能全景_2026-08-30/02-成长卡片.png) | ![能力线索](./screenshots/shiguang_app_功能全景_2026-08-30/03-我即宝藏-能力线索.png) | ![寻找伯牙](./screenshots/shiguang_app_功能全景_2026-08-30/04-寻找伯牙-个人名片.png) |
+
+## Flutter App 运行
+
+环境要求：已安装 Flutter、Xcode（运行 iOS/macOS）或 Android Studio（运行 Android）。
+
+```bash
+cd shiguang_flutter
+flutter pub get
+flutter devices
+```
+
+运行 iOS 模拟器：
+
+```bash
+flutter run -d "iPhone 17 Pro"
+```
+
+运行 macOS：
+
+```bash
+flutter run -d macos
+```
+
+Flutter 默认加载 `shiguang_flutter/assets/web/` 中的完整移动端 UI 和演示数据。
+
+## 网页与服务端运行
 
 ```bash
 npm install
 cp .env.example .env
-# 在 .env 中填写 DEEPSEEK_API_KEY
+# 如需接入 AI 对话，在 .env 中填写 DEEPSEEK_API_KEY
 npm run dev
 ```
 
-访问 `http://127.0.0.1:4173`。
+打开 `http://127.0.0.1:4173`。
 
-## 初版功能
+服务端提供手机号账户、会话、成长记录及 AI 流式聊天接口。密码使用 `scrypt` 加盐保存，模型密钥只保留在服务端，不写入前端或 Git 仓库。
 
-- 手机号账号、页面验证码、密码注册
-- 账号密码登录或账号验证码登录
-- “时光”DeepSeek 流式聊天
-- 当前正式移动端 UI 与画像、记录、同路人页面
-- 密码通过 `scrypt` 加盐保存，模型密钥只保存在服务端
+## 项目结构
 
-本地初版会把用户写入被 Git 忽略的 `.data/users.json`。验证码会直接显示在当前页面，不发送短信。部署到腾讯云前，只需要把数据适配器替换为 CloudBase 数据库，不需要开通腾讯云短信服务。
+```text
+shiguang_flutter/          Flutter 跨平台应用
+  assets/web/              App 内置的完整移动端 UI 与演示数据
+新版网页/                  本地网页开发版本
+apps/api/                  Node.js 服务端与账户接口
+packages/contracts/        前后端接口契约
+deploy/tencent-cloud/      腾讯云部署内容
+screenshots/               全功能截图与 ZIP 交付包
+tests/                     服务端和契约测试
+```
 
-## 两个人怎么共同开发
+## 隐私说明
 
-- UI/UX：从 `main` 创建 `feat/ux-v1`，主要修改 `apps/web/`。
-- 后端：从 `main` 创建 `feat/api-v1`，主要修改 `apps/api/`。
-- 共同格式：修改 `packages/contracts/openapi.yaml` 必须同时更新测试并在 PR 中说明。
-- PR 的自动检查通过后再合并，避免一方改坏另一方。
+产品默认将个人对话、照片、成长记录和能力证据视为私密内容。公开资料仅在用户主动确认后展示；演示环境中的人物、对话和成长记录均为测试数据。
 
-## 四人任务与建议评分权重
+## 团队协作
 
-评分用于验收任务，不代表成员重要性。每个人都需要提交自己的分支和 Pull Request。
-
-| 角色 | 协作分支 | 主要范围 | 权重 | 验收重点 |
-|---|---|---|---:|---|
-| UI/UX 与前端 | `feat/frontend-ux` | `apps/web/` | 30 | 页面可用、移动端适配、接口接入正确 |
-| 后端与数据 | `feat/backend-api` | `apps/api/` | 30 | 接口可运行、错误处理、记录能力 |
-| AI 与契约 | `feat/ai-contract` | `packages/contracts/`、后续 `packages/ai/` | 25 | 输出稳定、字段清楚、前后端都能理解 |
-| 硬件与测试 | `experiment/hardware-test` | `tests/`、后续 `prototypes/` | 15 | 摄像头/灯光实验、测试记录、风险说明 |
-
-总分 100。共同加分项：PR 描述清楚、没有越界修改、自动检查通过、能让另一位成员顺利接手。
-
-## AI 协作规则
-
-1. 先从自己的协作分支再创建短任务分支，例如 `feat/frontend-ux/home-v2`。
-2. 给 AI 的任务要写明允许修改的目录，以及不能改变的接口字段。
-3. AI 如果建议修改 `openapi.yaml`，必须先让前端和后端共同确认。
-4. 不把未经检查的大批 AI 代码直接合入 `main`。
-5. 最终通过 Pull Request 汇总到 `main`，不把四个人的代码一次性强推覆盖。
+- 功能开发请从最新 `main` 创建独立分支并通过 Pull Request 合并。
+- UI 修改需同步检查网页版本与 `shiguang_flutter/assets/web/` 内置版本。
+- 接口字段变更需同步更新 `packages/contracts/` 和相关测试。
+- 不提交密钥、真实账号密码或用户隐私数据。
