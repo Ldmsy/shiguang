@@ -1,0 +1,22 @@
++/* Redesigned opportunity exploration */
+.opportunity-card{position:relative;overflow:hidden;padding:22px!important;background:#193f35!important;color:#f8f4ea!important}
+.opportunity-card:after{content:'';position:absolute;width:220px;height:220px;right:-95px;top:42px;border:1px solid #ffffff22;border-radius:50%;box-shadow:0 0 0 34px #ffffff08,0 0 0 70px #ffffff06}
+.opportunity-card>header,.opportunity-card>footer{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center}
+.opportunity-card>header span,.opportunity-card>header b{font:600 7px 'DM Mono';letter-spacing:.08em}.opportunity-card>header b{color:#bed2c8}
+.opportunity-mark{position:relative;z-index:2;display:flex;align-items:center;gap:8px;margin:27px 0 22px}
+.opportunity-mark i{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#e6b7c8;color:#62364b;font:700 14px 'Noto Serif SC';font-style:normal}
+.opportunity-mark i+em+i{background:#dce9e1;color:#224a3c}.opportunity-mark em{font:400 12px 'DM Mono';font-style:normal;color:#a9c0b5}
+.opportunity-card>small,.opportunity-card>h2,.opportunity-card>p,.opportunity-tags,.opportunity-card>footer{position:relative;z-index:2}
+.opportunity-card>small{color:#a9c0b5!important}.opportunity-card>h2{font-size:29px!important;line-height:1.16!important;color:#fff!important;margin:8px 0 12px!important}
+.opportunity-card>p{max-width:300px;font-size:10px;line-height:1.75;color:#dbe5df}.opportunity-tags{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 25px}
+.opportunity-tags span{padding:7px 9px;border:1px solid #ffffff2c;border-radius:20px;font-size:7px;color:#dce8e1}
+.opportunity-card>footer{padding-top:15px;border-top:1px solid #ffffff25}.opportunity-card>footer small{font-size:7px;color:#a9c0b5}
+.opportunity-card>footer button{margin:0!important;padding:10px 0!important;background:transparent!important;color:#fff;border-bottom:1px solid #e6b7c8!important;border-radius:0!important}
+.opportunity-detail{display:grid;gap:15px;margin-top:22px}.opportunity-thesis,.path-options,.experiment-plan{background:#fff;border-radius:24px;padding:20px;box-shadow:0 10px 30px #20372a0b}
+.opportunity-detail section>span,.opportunity-detail article>span,.path-options header>span{font:700 7px 'DM Mono';letter-spacing:.1em;color:#98647c}
+.opportunity-thesis h2{font-size:19px;line-height:1.55;margin:10px 0}.opportunity-thesis p{font-size:9px;line-height:1.75;color:#69736c}
+.opportunity-thesis>div{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:18px}.opportunity-thesis>div b{display:grid;gap:5px;padding:10px;background:#edf2ef;border-radius:12px;font-size:7px;color:#647168}.opportunity-thesis>div em{font:500 14px 'DM Mono';font-style:normal;color:#285b43}
+.path-options header h2,.experiment-plan h2{font-size:18px;margin:7px 0 15px}.path-options>article{display:grid;grid-template-columns:30px 1fr;gap:10px;padding:14px 0;border-top:1px solid #e5e9e6}.path-options>article>b{font:500 9px 'DM Mono';color:#ac6f8a}.path-options small{font-size:7px;color:#7c8c82}.path-options h3{font-size:13px;margin:4px 0}.path-options p{font-size:9px;line-height:1.65;color:#68736b;margin:0}
+.experiment-plan{background:#f5eee5}.experiment-plan ol{list-style:none;padding:0;margin:0}.experiment-plan li{display:grid;grid-template-columns:28px 1fr;gap:9px;padding:11px 0;border-top:1px solid #8e7d6d25}.experiment-plan li>b{width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#285b43;color:#fff;font:8px 'DM Mono'}.experiment-plan li p{font-size:9px;line-height:1.65;margin:0;color:#69655f}.experiment-plan li strong{display:block;color:#28372f}.experiment-note{font-size:8px;line-height:1.65;color:#82766d;margin:12px 0 0}
+.opportunity-actions{display:grid;gap:8px}.opportunity-actions button{border:0;border-radius:15px;padding:13px;background:#285b43;color:#fff;font-size:9px}.opportunity-actions button+button{background:#fff;color:#285b43;border:1px solid #dfe5e1}
+

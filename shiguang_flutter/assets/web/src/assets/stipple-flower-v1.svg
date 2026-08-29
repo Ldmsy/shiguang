@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700">
+  <defs>
+    <radialGradient id="petal" cx="40%" cy="32%" r="78%"><stop stop-color="#5f91e8"/><stop offset=".48" stop-color="#174ca9"/><stop offset="1" stop-color="#092963"/></radialGradient>
+    <radialGradient id="heart"><stop stop-color="#e9b65f"/><stop offset=".35" stop-color="#d56f86"/><stop offset=".72" stop-color="#762e66"/><stop offset="1" stop-color="#142e71"/></radialGradient>
+    <pattern id="dots" width="13" height="13" patternUnits="userSpaceOnUse"><circle cx="2.4" cy="2.4" r="2" fill="#f5e7cf" opacity=".56"/><circle cx="9" cy="8" r="1.1" fill="#e7a4b8" opacity=".65"/></pattern>
+    <filter id="print"><feTurbulence baseFrequency=".018 .055" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="9"/><feComponentTransfer><feFuncA type="table" tableValues="0 .96"/></feComponentTransfer></filter>
+    <filter id="grain"><feTurbulence baseFrequency=".7" numOctaves="3" seed="12"/><feComposite in="SourceGraphic" operator="in"/></filter>
+    <ellipse id="p" cx="350" cy="170" rx="112" ry="190"/>
+  </defs>
+  <g filter="url(#print)" fill="url(#petal)" stroke="#eadcc4" stroke-width="4" stroke-opacity=".34">
+    <use href="#p" transform="rotate(0 350 350)"/><use href="#p" transform="rotate(30 350 350)"/><use href="#p" transform="rotate(60 350 350)"/><use href="#p" transform="rotate(90 350 350)"/><use href="#p" transform="rotate(120 350 350)"/><use href="#p" transform="rotate(150 350 350)"/><use href="#p" transform="rotate(180 350 350)"/><use href="#p" transform="rotate(210 350 350)"/><use href="#p" transform="rotate(240 350 350)"/><use href="#p" transform="rotate(270 350 350)"/><use href="#p" transform="rotate(300 350 350)"/><use href="#p" transform="rotate(330 350 350)"/>
+  </g>
+  <g opacity=".72" fill="url(#dots)">
+    <circle cx="350" cy="350" r="304"/><circle cx="350" cy="350" r="235" opacity=".55"/>
+  </g>
+  <circle cx="350" cy="350" r="145" fill="url(#heart)" filter="url(#print)"/>
+  <circle cx="350" cy="350" r="132" fill="url(#dots)" opacity=".86"/>
+  <g fill="#f1c66f" opacity=".84">
+    <circle cx="350" cy="350" r="9"/><circle cx="312" cy="325" r="7"/><circle cx="391" cy="322" r="6"/><circle cx="402" cy="366" r="8"/><circle cx="331" cy="395" r="6"/><circle cx="291" cy="369" r="5"/>
+  </g>
+  <circle cx="350" cy="350" r="318" fill="#fff" opacity=".13" filter="url(#grain)"/>
+</svg>

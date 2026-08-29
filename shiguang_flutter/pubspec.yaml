@@ -34,6 +34,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  webview_flutter: ^4.14.1
+  webview_flutter_windows: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +60,13 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/web/
+    - assets/web/src/
+    - assets/web/src/felt/
+    - assets/web/src/assets/
+    - assets/web/src/assets/cloud_ip/animations/
+    - assets/web/src/assets/cloud_ip/static/
+    - assets/web/src/data/
   fonts:
     - family: NotoSansSC
       fonts:

@@ -1,0 +1,87 @@
+.layered-talk {
+  position: relative;
+  min-height: calc(100svh - 180px);
+  isolation: isolate;
+  perspective: 1400px;
+}
+
+.talk-back-layer {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100svh - 180px);
+  opacity: .28;
+  filter: saturate(.45) blur(2px);
+  transform: translateY(46px) scale(.94);
+  transform-origin: 50% 16%;
+  pointer-events: none;
+}
+
+.talk-front-layer {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  min-height: calc(100svh - 180px);
+  overflow: hidden;
+  border: 1px solid rgba(105, 122, 119, .16);
+  border-radius: 28px;
+  background: rgba(231, 235, 232, .76);
+  box-shadow: 0 30px 90px rgba(52, 68, 64, .12);
+  backdrop-filter: blur(22px) saturate(.62);
+  -webkit-backdrop-filter: blur(22px) saturate(.62);
+}
+
+.talk-front-layer .talk-landing {
+  min-height: 100%;
+  background: linear-gradient(145deg, rgba(239, 241, 238, .82), rgba(218, 227, 224, .62));
+}
+
+.talk-front-layer .dot-stage {
+  opacity: .52;
+  filter: saturate(.28) contrast(.88);
+}
+
+.talk-front-layer .landing-copy,
+.talk-front-layer .landing-index,
+.talk-front-layer .landing-actions {
+  filter: saturate(.68);
+}
+
+.talk-front-layer .landing-actions > button {
+  background-color: rgba(239, 242, 239, .62);
+  border-color: rgba(77, 98, 94, .2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.layered-talk.is-open .talk-front-layer {
+  pointer-events: none;
+  animation: release-front .72s cubic-bezier(.22, .75, .18, 1) forwards;
+}
+
+.layered-talk.is-open .talk-back-layer {
+  pointer-events: auto;
+  animation: expand-conversation .82s cubic-bezier(.18, .78, .18, 1) forwards;
+}
+
+@keyframes release-front {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  45% { opacity: .45; transform: translateY(-14px) scale(.985); }
+  100% { opacity: 0; visibility: hidden; transform: translateY(-36px) scale(.96); }
+}
+
+@keyframes expand-conversation {
+  0% { opacity: .28; filter: saturate(.45) blur(2px); transform: translateY(46px) scale(.94); }
+  100% { opacity: 1; filter: none; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layered-talk.is-open .talk-front-layer,
+  .layered-talk.is-open .talk-back-layer { animation-duration: .01ms; }
+}
+
+@media (max-width: 720px) {
+  .layered-talk,
+  .talk-back-layer,
+  .talk-front-layer { min-height: calc(100svh - 130px); }
+  .talk-front-layer { border-radius: 20px; }
+}
