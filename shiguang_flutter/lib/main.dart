@@ -19,7 +19,7 @@ class ShiguangApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
     debugShowCheckedModeBanner: false,
-    title: '拾光',
+    title: '我是谁',
     theme: ThemeData(
       colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2C695C)),
       scaffoldBackgroundColor: const Color(0xFFFFFDF8),

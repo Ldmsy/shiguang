@@ -1,5 +1,5 @@
 name: shiguang_app
-description: "拾光跨平台成长陪伴应用"
+description: "我是谁跨平台个人成长应用"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -64,6 +64,7 @@ flutter:
     - assets/web/src/
     - assets/web/src/felt/
     - assets/web/src/assets/
+    - assets/web/src/assets/felt-ui/
     - assets/web/src/assets/cloud_ip/animations/
     - assets/web/src/assets/cloud_ip/static/
     - assets/web/src/data/
