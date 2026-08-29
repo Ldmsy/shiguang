@@ -335,6 +335,25 @@ body { background:#fff; }
   .login-screen:after,.onboarding-screen:after{content:'';position:absolute;z-index:100;left:50%;top:7px;width:112px;height:27px;border-radius:18px;background:#101211;transform:translateX(-50%);pointer-events:none}
 }
 
+/* Keep the browser preview at the real CSS size of a modern iPhone. */
+@media(min-width:501px) and (max-width:920px){
+  #app{padding:20px}
+  .workspace-shell.phone-shell{
+    width:393px;
+    max-width:calc(100vw - 40px);
+    height:min(720px,calc(100svh - 64px));
+    border-width:6px;
+    border-radius:38px;
+  }
+  #app>.formal-login.login-screen,#app>.onboarding-screen{
+    width:393px!important;
+    max-width:calc(100vw - 40px)!important;
+    height:min(720px,calc(100svh - 64px));
+    border-width:6px;
+    border-radius:38px;
+  }
+}
+
 /* On an actual phone, the web app becomes the screen itself. */
 @media(max-width:500px){
   html,body,#app{width:100%;min-height:100%;background:#fff}
